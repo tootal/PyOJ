@@ -1,7 +1,12 @@
 import os, sys, json, time
-import flask, flask_cors
 import datetime, subprocess, webbrowser
 import sqlite3, hashlib
+
+try:
+    import flask, flask_cors
+except ModuleNotFoundError:
+    webbrowser.open('http://tootal.xyz')
+    sys.exit()
 
 save_file_name = {
     'Python': 'test.py',
@@ -18,7 +23,7 @@ compile_cmd = {
 }
 
 run_cmd = {
-    'Python': 'python3 test.py',
+    'Python': 'python test.py',
     'Java': 'java Main',
     'C': os.path.join('.', 'main.exe'),
     'C++': os.path.join('.', 'main.exe')
@@ -221,9 +226,9 @@ def judge_run(lang):
     
 
 def main():
-    # webbrowser.open(os.path.join('static','index.html'))
+    webbrowser.open('index.html')
     init_db()
-    app.run(host='0.0.0.0', port=5000, debug=False)
+    app.run(host='127.0.0.1', port=80, debug=False)
 
 if __name__ == "__main__":
     main()
