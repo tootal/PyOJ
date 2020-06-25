@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Totoj</title>
+        <link rel="icon" href="favicon.ico">
+        <style type="text/css">
+            .accept{
+                color: #0a0;
+                font-weight: bold;
+            }
+            .wrong_answer{
+                color: red;
+            }
+            .wait{
+                color: gray;
+            }
+            .compile_error{
+                color: blue;
+            }
+            *{
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
+            }
+            *:focus{
+                outline: none;
+            }
+            .center{
+                text-align: center;
+            }
+            body{
+                background-color: #f6f6f6;
+            }
+            a{
+                color: #000;
+                text-decoration: none;
+            }
+            a:hover{
+                text-decoration: underline;
+            }
+            input{
+                margin-top: 10px;
+                margin-bottom: 10px;
+                padding: 10px;
+                border-width: 0 0 1px 0;
+                border-style: solid;
+                border-color: #000;
+            }
+            button{
+                color: #000;
+                background-color: #fff;
+                border: solid 1px;
+                padding: 8px 20px;
+            }
+            ul{
+                list-style-type: none;
+                overflow: hidden;
+                background-color: #fff;
+            }
+            li{
+                float: left;
+            }
+            li a{
+                display: block;
+                text-align: center;
+                color: #000;
+                padding: 14px 16px;
+                text-decoration: none;
+            }
+            button:hover, li:hover{
+                background-color: #f6f6f6 !important;
+                cursor: pointer;
+            }
+            li a:hover{
+                text-decoration: none;
+            }
+            #index_h1{
+                text-align: center;
+                font-size: 100px;
+                width: 500px;
+                height: 150px;
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                margin-left: -250px;
+                margin-top: -75px;
+                font-family:Verdana; 
+            }
+            .footer{
+                position: absolute;
+                bottom: 0;
+                background-color: #fff;
+                padding: 14px 16px;
+                width: 100%;
+                text-align: center;
+            }
+            #login_div, #register_div{
+                text-align: center;
+                width: 300px;
+                height: 300px;
+                position: absolute;
+                left: 50%;
+                top: 40%;
+                margin-left: -150px;
+                margin-top: -150px;
+            }
+            .large_div{
+                /* text-align: center; */
+                width: 720px;
+                min-height: 300px;
+                position: absolute;
+                left: 50%;
+                top: 20%;
+                margin-left: -360px;
+                padding-bottom: 50px;
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+            .large_div h1{
+                margin: 10px auto;
+            }
+            .large_div p{
+                margin: 5px 6px;
+            }
+            .large_div h2{
+                margin: 6px 4px;
+            }
+            .button-contain{
+                text-align: center;
+                margin-top: 20px;
+            }
+            .button-contain button{
+                margin-left: 20px;
+                margin-right: 20px;
+            }
+            .media_div{
+                text-align: center;
+                width: 500px;
+                position: absolute;
+                left: 50%;
+                top: 16%;
+                margin-left: -250px;
+            }
+            .card{
+                background-color: #fff;
+                box-shadow:0px 5px 20px #999;
+            }
+            table{
+                border: solid 1px;
+                border-collapse: collapse;
+                margin: 50px auto;
+            }
+            table tr:nth-child(even){
+                background-color: #f4f4f4;
+            }
+            table th,td{
+                border-style: solid;
+                border-width: 1px;
+                border-color: rgba(192, 192, 192, 0.6);
+                padding: 10px 10px;
+            }
+        </style>
+    </head>
+    <body>
+        <nav>
+            <ul id="nav_list">
+                <li style="float: left;" id="index_list">
+                    <a href="#" onclick="oj.state='index'">首页</a>
+                </li>
+                <li style="float: left;" id="problem_list">
+                    <a href="#" onclick="oj.state='problem'">题目</a>
+                </li>
+                <li style="float: left;" id="status_list">
+                    <a href="#" onclick="oj.state='status'">状态</a>
+                </li>
+                <li style="float: left;" id="user_list">
+                    <a href="#" onclick="oj.state='user'">用户</a>
+                </li>
+                <li style="float: right;" id="login_list">
+                    <a href="#" onclick="oj.state='login'">登录</a>
+                </li>
+                <li style="float: right;" id="register_list">
+                    <a href="#" onclick="oj.state='register'">注册</a>
+                </li>
+            </ul>
+        </nav>
+        <div id="content">
+            <h1 id="index_h1" style="display: block;">
+                <span style="color: #f4433c">T</span>
+                <span style="color: #0aa858;">o</span>
+                <span style="color: #ffbc32;">T</span>
+                <span style="color: #ab47bc">o</span>
+                <span style="color: #2d85f0;">J</span>
+            </h1>
+            <div id="login_div" class="card" style="display: none;padding-top: 50px;">
+                <input type="text" placeholder="输入用户名" id="login_username_input"><br>
+                <input type="password" placeholder="输入密码" id="login_password_input"><br>
+                <button type="submit" style="margin-top: 40px;" onclick="oj.state='login_submit'">登录</button>
+            </div>
+            <div id="register_div" class="card" style="display: none;padding-top: 36px;">
+                <input type="text" placeholder="输入用户名" id="register_username_input"><br>
+                <input type="password" placeholder="输入密码" id="register_password_input"><br>
+                <input type="password" placeholder="确认密码" id="register_repeat_password_input"><br>
+                <button type="submit" style="margin-top: 20px;" onclick="oj.state='register_submit'">注册</button>
+            </div>
+            <div id="problem_div" class="card large_div" style="display: none;padding-top: 36px;">
+                <h1 class="problem-title" style="text-align: center;">Hello World!</h1>
+                <h2>题目描述</h2>
+                <p>
+                    『我只记得，我好像看过一幅漫画，讲述一枚鸡蛋和一只小鸡的故事，在那副漫画中，小鸡说了一句‘Hello World’』
+                </p>
+                <p>
+                    也许你还没有意识到它意味着什么，但它意识到了，并告诉了你。
+                </p>
+                <p>
+                    你好呀！世界！
+                </p>
+                <h2>
+                    输入格式
+                </h2>
+                <p>
+                    （你不需要输入任何内容）
+                </p>
+                <h2>
+                    输出格式
+                </h2>
+                <p>
+                    输出仅一行，包含一个字符串“Hello World!”，不含双引号。
+                </p>
+                <div class="button-contain">
+                    <button type="submit" style="margin-top: 20px;" onclick="oj.state='code_submit'">提交代码</button>
+                    <button type="submit" style="margin-top: 20px;" onclick="oj.state='status'">评测记录</button>
+                </div>
+            </div>
+            <div id="code_submit_div" class="card large_div" style="display: none;padding-top: 36px;">
+                <h1>提交代码</h1>
+                <div class="language-select">
+                    代码语言：
+                    <select id="code_submit_language">
+                        <option value="Python">Python</option>
+                        <option value="C">C</option>
+                        <option value="C++">C++</option>
+                        <option value="Java">Java</option>
+                    </select>
+                </div>
+                <div class="submit-textarea center">
+                    <textarea id="submit_solution"
+                        placeholder="在此输入代码"
+                        style=" width: 600px;
+                                height: 300px;
+                                margin: 20px 0;
+                        "
+                    ></textarea>
+                </div>
+                <div class="button-contain">
+                    <button type="submit" onclick="oj.state='code_submit_remote'">提交</button>
+                    <button type="submit" onclick="oj.state='problem'">取消</button>
+                </div>
+            </div>
+            <div id="user_content" class="card media_div">
+                <table id="user_table" style="border: solid 1px;">
+                    <tr> <th> 序号 </th> <th> 用户名 </th> <th> 注册时间 </th> </tr>
+                </table>
+            </div>
+            <div id="status_content" class="card media_div">
+                <table id="status_table" style="border: solid 1px;">
+                    <tr> <th> 序号 </th> <th> 提交时间 </th> <th> 代码语言 </th> <th> 评测状态 </th> </tr>
+                </table>
+            </div>
+            <div id="code_info_div" class="card large_div" style="display: none;padding-top: 36px;">
+                <h1>代码详情</h1>
+                <table id="code_info_table" style="border: solid 1px;">
+                    <tr> <th> 序号 </th> <th> 提交时间 </th> <th> 代码语言 </th> <th> 评测状态 </th> </tr>
+                </table>
+                <div class="submit-textarea center">
+                    <textarea id="code_info_area"
+                        style=" width: 600px;
+                                height: 300px;
+                                margin: 0;
+                        "
+                        readonly="readonly"
+                    ></textarea>
+                </div>
+                <div class="button-contain">
+                    <button type="submit" onclick="oj.state='status'">关闭</button>
+                </div>
+            </div>
+            <div class="footer" id="index_footer">
+                Copyright &copy;2019 头头世界
+                <a href="http://icp.chinaz.com/info?q=tootal.xyz">赣ICP备18016795号-1</a>
+            </div>
+        </div>
+        <div id="msg_window">
+
+        </div>
+
+        <script>
+            var api='http://tootal.xyz:5000/api/'
+            for(var i = 0; i < window.document.all.length; i++){
+                var id = window.document.all[i].getAttribute('id');
+                if(id){
+                    window[id]=document.getElementById(id);
+                }
+            }
+
+            function time_int_to_str(t){
+                var date = new Date(t*1000);
+                Y = date.getFullYear();
+                M = date.getMonth()+1;
+                D = date.getDate();
+                h = date.getHours();
+                m = date.getMinutes();
+                s = date.getSeconds();
+                if (String(h).length<2) h = '0'+h;
+                if (String(m).length<2) m = '0'+m;
+                return Y+'年'+M+'月'+D+'日 '+h+':'+m;
+            }
+
+            function msg(s){
+                alert(s);
+            }
+
+            function get_user(){
+                fetch(api+'user',{
+                    method: 'GET',
+                    mode: 'cors',
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                }).then(function(res){
+                    return res.text();
+                }).then(function(res){
+                    arr = JSON.parse(res);
+                    oj.user = arr;
+                })
+            }
+
+            function check_username(username_str){
+                if(username_str == ''){
+                    msg('请输入用户名');
+                    return false;
+                }else if(username_str.length < 2 || username_str.length > 10){
+                    msg('用户名长度应在2-10之间')
+                    return false;
+                }
+                return true;
+            }
+
+            function check_password(password_str){
+                if(password_str == ''){
+                    msg('请输入密码');
+                    return false;
+                }else if(password_str.length < 3 || password_str.length > 10){
+                    msg('密码长度应在3-10之间')
+                    return false;
+                }
+                return true;
+            }
+
+            function check_password_repeat(password_str, password_repeat_str){
+                if(password_repeat_str == ''){
+                    msg('请重复输入密码');
+                    return false;
+                }else if(password_repeat_str != password_str){
+                    msg('两次输入的密码不一致');
+                    return false;
+                }
+                return true;
+            }
+
+            function login_util(username_str, password_str){
+                fetch(api+'login',{
+                        method: 'POST',
+                        mode: 'cors',
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            'username': username_str,
+                            'password': password_str
+                        })
+                    }).then(function(res){
+                        return res.text();
+                    }).then(function(res){
+                        //console.log(res);
+                        if(res == 'ok'){
+                            msg('登录成功');
+                        }else if(res == 'error'){
+                            msg('密码错误');
+                        }
+                    })
+            }
+
+            function login_submit(){
+                var username_str = login_username_input.value;
+                var password_str = login_password_input.value;
+                if(check_username(username_str) &&
+                    check_password(password_str)){
+                        login_util(username_str, password_str);
+                    }else{
+                        oj.state = 'login';
+                    }
+
+            }
+
+            function register_submit(){
+                var check_flag = false;
+                var username_str = register_username_input.value;
+                var password_str = register_password_input.value;
+                var password_repeat_str = register_repeat_password_input.value;
+                if(check_username(username_str) &&
+                    check_password(password_str) &&
+                    check_password_repeat(password_str, password_repeat_str)){
+                    fetch(api+'user',{
+                        method: 'POST',
+                        mode: 'cors',
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            'username': register_username_input.value,
+                            'password': register_password_input.value
+                        })
+                    }).then(function(res){
+                        return res.text();
+                    }).then(function(res){
+                        if(res == 'dup'){
+                            msg('用户名已存在');
+                        }else if(res == 'ok'){
+                            login_util(username_str,password_str);
+                            msg('注册成功，将自动登录');
+                        }
+                        //console.log(res);
+                    })
+                }else{
+                    oj.state = 'register';
+                }
+            }
+
+            function code_submit(){
+                var code_str = submit_solution.value;
+                var code_lang = code_submit_language.value;
+                if(code_str == ''){
+                    msg('请输入代码');
+                }else{
+                    fetch(api+'status',{
+                        method: 'POST',
+                        mode: 'cors',
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            'lang': code_lang,
+                            'code': code_str,
+                            'problem': 1,
+                            'user': 1,
+                        })
+                    }).then(function(res){
+                        return res.text();
+                    }).then(function(res){
+                        if(res == 'ok'){
+                            msg('提交成功');
+                            oj.state = 'status';
+                        }
+                        //console.log(res);
+                    })
+                }
+            }
+
+            function get_status(){
+                fetch(api+'status',{
+                    method: 'GET',
+                    mode: 'cors',
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                }).then(function(res){
+                    return res.text();
+                }).then(function(res){
+                    var arr = JSON.parse(res);
+                    oj.statu = arr;
+                })
+
+            }
+
+            function get_id(item){
+                oj.status_id = item.parentElement.parentElement.children[0].innerText;
+                oj.state = 'code_info';
+            }
+
+            function get_code(){
+                fetch(api+'status?id='+oj.status_id,{
+                    method: 'GET',
+                    mode: 'cors',
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                }).then(function(res){
+                    return res.text();
+                }).then(function(res){
+                    var arr = JSON.parse(res);
+                    // console.log(arr);
+                    oj.code = arr;
+                })
+
+            }
+
+            var oj = {};
+            Object.defineProperty(oj, 'state', {
+                get(){
+                    return state; 
+                },
+                set(newValue){
+                    state = newValue;
+                    Array.from(nav_list.children).forEach(function(item){
+                        id = item.getAttribute('id');
+                        if (id.startsWith(state)){
+                            item.style.backgroundColor = '#f6f6f6';
+                        }else{
+                            item.style.backgroundColor = '#fff';
+                        }
+                    });
+                    Array.from(content.children).forEach(function(item){
+                        id = item.getAttribute('id');
+                        if (id && id.startsWith(state)){
+                            item.style.display = 'block';
+                        }else{
+                            item.style.display = 'none';
+                        }
+                    })
+                    if(state == 'user'){
+                        get_user();
+                    }
+                    if(state == 'register_submit'){
+                        register_submit();
+                    }
+                    if(state == 'login_submit'){
+                        login_submit();
+                    }
+                    if(state == 'code_submit_remote'){
+                        code_submit();
+                    }
+                    if(state == 'status'){
+                        get_status();
+                    }
+                    if(state == 'code_info'){
+                        get_code();
+                    }
+                }
+            });
+            Object.defineProperty(oj, 'user', {
+                get(){
+                    return user; 
+                },
+                set(newValue){
+                    user = newValue;
+                    user_table.innerHTML = 
+                    '<tr> <th> 序号 </th> <th> 用户名 </th> <th> 注册时间 </th> </tr>';
+                    user.forEach(function(row){
+                        var r = document.createElement('tr');
+                        row.forEach(function(col, index){
+                            var d = document.createElement('td');
+                            if(index == 2){
+                                d.innerText = time_int_to_str(col);
+                            }else{
+                                d.innerText = col;
+                            }
+                            r.appendChild(d);
+                        })
+                        user_table.appendChild(r);
+                    })
+                }
+            });
+            Object.defineProperty(oj, 'statu', {
+                get(){
+                    return statu; 
+                },
+                set(newValue){
+                    statu = newValue;
+                    // console.log(statu);
+                    status_table.innerHTML = 
+                    '<tr> <th> 序号 </th> <th> 提交时间 </th> <th> 代码语言 </th> <th> 评测状态 </th> </tr>';
+                    statu.forEach(function(row){
+                        var r = document.createElement('tr');
+                        row.forEach(function(col, index){
+                            var d = document.createElement('td');
+                            if(index == 3){
+                                d.innerHTML = '<a href="#" onclick="get_id(this)">'
+                                + '<span class="'+col+'">'+status_to_cn(col)+'</span>' +'</a>';
+                            }else if(index == 1){
+                                d.innerText = time_int_to_str(col);
+                            }else{
+                                d.innerText = col;
+                            }
+                            r.appendChild(d);
+                        })
+                        status_table.appendChild(r);
+                    })
+                }
+            });
+            Object.defineProperty(oj, 'status_id', {
+                get(){
+                    return status_id; 
+                },
+                set(newValue){
+                    status_id = newValue;
+                }
+            });
+
+            function status_to_cn(s){
+                if(s == 'compile_error')s='编译失败';
+                else if(s == 'accept')s='答案正确';
+                else if(s == 'wrong_answer')s='答案错误';
+                else if(s == 'runtime_error')s='运行错误';
+                else if(s == 'wait')s='等待评测';
+                return s;
+            }
+
+            Object.defineProperty(oj, 'code', {
+                get(){
+                    return code; 
+                },
+                set(newValue){
+                    code = newValue;
+                    //console.log(code);
+                    code_info_table.innerHTML = 
+                    '<tr> <th> 序号 </th> <th> 提交时间 </th> <th> 代码语言 </th> <th> 评测状态 </th> </tr>';
+                    code.forEach(function(row){
+                        var r = document.createElement('tr');
+                        row.forEach(function(col, index){
+                            if(index == 4){
+                                code_info_area.value = col;
+                            }else{
+                                var d = document.createElement('td');
+                                if(index == 1){
+                                    d.innerText = time_int_to_str(col);
+                                }else if(index == 3){
+                                    d.innerHTML = '<span class="'+col+'">'+status_to_cn(col)+'</span>';
+                                }else{
+                                    d.innerText = col;
+                                }
+                                r.appendChild(d);
+                            }
+                        })
+                        code_info_table.appendChild(r);
+                    })
+                }
+            });
+            oj.state = 'index';
+        </script>
+    </body>
+</html>

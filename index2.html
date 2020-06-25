@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>PyOJ</title>
+        <meta charset="utf-8">
+        <link rel="icon" href="favicon.ico">
+        <link rel="stylesheet" href="index.css">
+        <script type="text/javascript" src="index.js"></script>
+    </head>
+    <body>
+        <h1>Hello World!</h1>
+        <div class="border content">
+            <h2>题目描述</h2>
+            <p>
+                『我只记得，我好像看过一幅漫画，讲述一枚鸡蛋和一只小鸡的故事，在那副漫画中，小鸡说了一句‘Hello World’』
+            </p>
+            <p>
+                也许你还没有意识到它意味着什么，但它意识到了，并告诉了你。
+            </p>
+            <p>
+                你好呀！世界！
+            </p>
+            <h2>
+                输入格式
+            </h2>
+            <p>
+                （你不需要输入任何内容）
+            </p>
+            <h2>
+                输出格式
+            </h2>
+            <p>
+                输出仅一行，包含一个字符串“Hello World!”，不含双引号。
+            </p>
+        </div>
+        <div class="menu" id="menu">
+            <button type="button" 
+                onclick="showSubmitPanel()">提交评测</button>
+            <button type="button"
+                onclick="showStatusPanel()">评测记录</button>
+        </div>
+        <div class="panel-shadow" id="panel-shadow"
+            onclick="(event)"></div>
+        <div class="border panel" id="submit-panel">
+            <h3>提交评测</h3>
+            <div class="language-select">
+                代码语言：
+                <select id="submit-language">
+                    <option value="Python">Python</option>
+                    <option value="C">C</option>
+                    <option value="C++">C++</option>
+                    <option value="Java">Java</option>
+                </select>
+            </div>
+            <div class="submit-textarea">
+                <textarea id="submit-solution"
+                    placeholder="在此输入代码"
+                    ></textarea>
+            </div>
+            <div class="panel-button">
+                <button type="button" 
+                    onclick="hideSubmitPanel()">关闭窗口</button>
+                <button type="button" onclick="submitSolution()">提交评测</button>
+            </div>
+        </div>
+        <div class="border panel" id="status-panel">
+            <h3>评测记录</h3>
+            <div class="status-table">
+                <table id="status-table">
+                    <tr id="status-table-head">
+                        <th>提交时间</th>
+                        <th>状态</th>
+                        <th>代码语言</th>
+                    </tr>
+                </table>
+            </div>
+            <div class="panel-button">
+                <button type="button" 
+                    onclick="hideStatusPanel()">关闭窗口</button>
+                <button type="button" onclick="getStatus()">刷新</button>
+            </div>
+
+        </div>
+    </body>
+</html>
